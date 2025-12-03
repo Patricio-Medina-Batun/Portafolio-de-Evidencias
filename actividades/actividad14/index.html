@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Simbólica Ecuaciones Lineales</title>
 
-    <!-- 🕯️ Fuentes góticas sobrias -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cinzel+Decorative:wght@700&family=Courier+New:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         /* ⚜️ Estilo oscuro elegante con piedra y bronce */
@@ -29,14 +28,56 @@
             padding: 40px;
             border-radius: 16px;
             border: 1px solid #4a3b2a;
-            box-shadow:
+            box-shadow: 
                 0 0 25px rgba(0, 0, 0, 0.7),
                 inset 0 0 15px rgba(70, 50, 30, 0.25);
             width: 90%;
             max-width: 900px;
             text-align: left;
             animation: fadeIn 0.8s ease-in-out;
+            position: relative; /* Para posicionamiento */
         }
+
+        /* --- NUEVO ESTILO PARA EL BOTÓN DE REGRESAR --- */
+        .nav-top {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .btn-back {
+            background: linear-gradient(145deg, #3a2f1f, #2b2b2b);
+            color: #8c7b60;
+            padding: 10px 20px;
+            border: 1px solid #4a3b2a;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0; /* Reset margen global de botones */
+        }
+
+        .btn-back span {
+            font-size: 1.2em;
+            line-height: 0;
+            padding-bottom: 2px;
+        }
+
+        .btn-back:hover {
+            background: linear-gradient(145deg, #5a4a32, #3a2f1f);
+            color: #d0b07a;
+            border-color: #d0b07a;
+            box-shadow: -2px 0 10px rgba(208, 176, 122, 0.2);
+            transform: translateX(-3px);
+        }
+        /* ----------------------------------------------- */
 
         h1 {
             font-family: 'Cinzel Decorative', serif;
@@ -74,7 +115,7 @@
         }
 
         /* ⚗️ Inputs estilo piedra */
-        #ecuacion,
+        #ecuacion, 
         #formulaLiteral {
             width: 100%;
             padding: 12px;
@@ -97,8 +138,8 @@
             font-family: 'Cinzel', serif;
         }
 
-        /* 🔮 Botones estilo bronce pulido */
-        button {
+        /* 🔮 Botones estilo bronce pulido (Generales) */
+        button:not(.btn-back) {
             background: linear-gradient(145deg, #5a4a32, #3a2f1f);
             color: #f5f0e1;
             padding: 12px 28px;
@@ -114,7 +155,7 @@
             margin-bottom: 10px;
         }
 
-        button:hover {
+        button:not(.btn-back):hover {
             background: linear-gradient(145deg, #7b6646, #5a4a32);
             color: #fff8e6;
             box-shadow: 0 0 10px rgba(195, 160, 90, 0.4);
@@ -205,6 +246,11 @@
 
 <body>
     <div class="container">
+        <div class="nav-top">
+            <button onclick="window.history.back()" class="btn-back">
+                <span>&#10094;</span> Regresar
+            </button>
+        </div>
         <h1>Calculadora Simbólica de Ecuaciones</h1>
         <h2>Tecnológico de Software</h2>
         <h2>Fundamentos de Álgebra</h2>
@@ -225,7 +271,7 @@
         <section class="solver-section">
             <h2>2. Despeje Simbólico de Fórmulas</h2>
             <p>Introduce cualquier fórmula matemática (ej: C = 5(F - 32)/9):</p>
-
+            
             <div class="formula-input-container">
                 <label for="formulaLiteral">Fórmula:</label>
                 <input type="text" id="formulaLiteral" value="C = 5(F - 32)/9" placeholder="Ej: T = F*c/r">
@@ -276,6 +322,12 @@
             const sinX = eq.replace(/[+-]?\d*\.?\d*\*?x/g, '');
             if (sinX) { try { b = math.evaluate(sinX); } catch { b = 0; } }
             return { a, b };
+        }
+        
+        // Nota: La función procesarFormulaLiteral() no estaba definida en tu código original,
+        // por lo que he dejado el botón funcional pero sin la lógica interna, tal como venía.
+        function procesarFormulaLiteral() {
+             document.getElementById('mensajeErrorFormula').innerText = "Función de despeje simbólico pendiente de implementación en JS.";
         }
 
         document.addEventListener('DOMContentLoaded', resolverEcuacionParseada);
