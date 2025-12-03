@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>División sintética</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:wght@400;600&family=Courier+New&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:wght@400;600&family=Courier+New&display=swap');
-
         * {
             margin: 0;
             padding: 0;
@@ -38,6 +36,44 @@
                 inset 0 0 15px rgba(70, 50, 30, 0.25);
             animation: fadeIn 0.8s ease-in-out;
         }
+
+        /* --- ESTILOS DEL BOTÓN REGRESAR --- */
+        .nav-top {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .btn-back {
+            background: rgba(20, 20, 20, 0.6);
+            color: #8c7b60;
+            border: 1px solid #4a3b2a;
+            padding: 8px 16px; /* Más pequeño que el botón principal */
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            width: auto; /* Anular el width: 100% de los botones generales */
+            margin-top: 0;
+            box-shadow: none;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            color: #d0b07a;
+            border-color: #d0b07a;
+            background: rgba(43, 43, 43, 0.8);
+            transform: translateX(-3px); /* Efecto de moverse a la izquierda */
+            box-shadow: -2px 0 10px rgba(208, 176, 122, 0.2);
+        }
+        /* ---------------------------------- */
 
         h1 {
             font-family: 'Cinzel Decorative', serif;
@@ -122,7 +158,8 @@
             background: rgba(255, 255, 255, 0.03);
         }
 
-        button {
+        /* Estilo para el botón de calcular (más grande) */
+        button.btn-calc {
             width: 100%;
             padding: 15px;
             background: linear-gradient(145deg, #5a4a32, #3a2f1f);
@@ -139,7 +176,7 @@
             margin-top: 10px;
         }
 
-        button:hover {
+        button.btn-calc:hover {
             background: linear-gradient(145deg, #7b6646, #5a4a32);
             color: #fff;
             box-shadow: 0 0 15px rgba(195, 160, 90, 0.3);
@@ -168,17 +205,6 @@
             margin-bottom: 15px;
             border-bottom: 1px solid #3a2f1f;
             padding-bottom: 5px;
-        }
-
-        .original-poly {
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            font-size: 1.2em;
-            color: #e6e2d3;
-            margin-bottom: 20px;
-            padding: 10px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 4px;
         }
 
         .process-table {
@@ -241,44 +267,47 @@
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
 </head>
 <body>
-     <div class="container">
-    <h1>División Sintética de Polinomios</h1>
-    <h2>Tecnológico de Software</h2>
-    <h2>Fundamentos de Álgebra</h2>
-    <h2>Prof. Jorge Javier Pedroza Romero</h2>
-    <h2>Alumno. Patricio Medina Batun, Grupo 1B</h2>
-    <p class="subtitle">Soporta coeficientes y raíces reales y complejas</p>
-
-    <div class="input-section">
-        <label for="polinomio">Polinomio:</label>
-        <input type="text" id="polinomio" placeholder="Ejemplo: 5x^3 + 3x^2 + 2x + 1 o x^2 - 6x + 11">
-        <p class="help-text">Ingresa el polinomio con formato algebraico</p>
-        <div class="example">
-            <strong>Ejemplos:</strong><br>
-            • 5x^3 + 3x^2 + 2x + 1<br>
-            • x^3 - 6x^2 + 11x - 6<br>
-            • 2x^2 + (3+2i)x + 1<br>
-            • x^4 - 1
+    <div class="container">
+        <div class="nav-top">
+            <button onclick="window.history.back()" class="btn-back">
+                <span>&#10094;</span> Regresar
+            </button>
         </div>
-    </div>
+        <h1>División Sintética de Polinomios</h1>
+        <h2>Tecnológico de Software</h2>
+        <h2>Fundamentos de Álgebra</h2>
+        <h2>Prof. Jorge Javier Pedroza Romero</h2>
+        <h2>Alumno. Patricio Medina Batun, Grupo 1B</h2>
+        <p class="subtitle">Soporta coeficientes y raíces reales y complejas</p>
 
-    <div class="input-section">
-        <label for="raiz">Raíz (divisor):</label>
-        <input type="text" id="raiz" placeholder="Ejemplo: 2 o 1+i">
-        <p class="help-text">Ingresa el valor de la raíz (puede ser complejo)</p>
-        <div class="example">
-            <strong>Ejemplos:</strong> 2, -3, 1+i, 2-3i
+        <div class="input-section">
+            <label for="polinomio">Polinomio:</label>
+            <input type="text" id="polinomio" placeholder="Ejemplo: 5x^3 + 3x^2 + 2x + 1 o x^2 - 6x + 11">
+            <p class="help-text">Ingresa el polinomio con formato algebraico</p>
+            <div class="example">
+                <strong>Ejemplos:</strong><br>
+                • 5x^3 + 3x^2 + 2x + 1<br>
+                • x^3 - 6x^2 + 11x - 6<br>
+                • 2x^2 + (3+2i)x + 1<br>
+                • x^4 - 1
+            </div>
         </div>
+
+        <div class="input-section">
+            <label for="raiz">Raíz (divisor):</label>
+            <input type="text" id="raiz" placeholder="Ejemplo: 2 o 1+i">
+            <p class="help-text">Ingresa el valor de la raíz (puede ser complejo)</p>
+            <div class="example">
+                <strong>Ejemplos:</strong> 2, -3, 1+i, 2-3i
+            </div>
+        </div>
+
+        <button class="btn-calc" onclick="calcularDivision()">Calcular División Sintética</button>
+
+        <div id="resultado" class="result-section"></div>
     </div>
-
-    <button onclick="calcularDivision()">Calcular División Sintética</button>
-
-    <div id="resultado" class="result-section"></div>
-</div>
-</body>
 <script>
 class NumeroComplejo {
     constructor(real, imag = 0) {
@@ -428,7 +457,7 @@ function parsearComplejo(str) {
             imag = parseFloat(str);
         }
     } else {
-         imag = parseFloat(str);
+            imag = parseFloat(str);
     }
 
     if (isNaN(real)) real = 0;
