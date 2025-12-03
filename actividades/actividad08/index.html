@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Operaciones Algebraicas</title>
+
+  <!-- Fuente caligráfica -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:wght@400;600&family=Courier+New&display=swap');
+
+    body {
+      font-family: 'EB Garamond', 'Garamond', serif;
+      background: radial-gradient(circle at top, #2c2c2c 0%, #101010 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 3rem;
+      color: #e6e2d3;
+      overflow-x: hidden;
+      margin: 0;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      padding: 3rem;
+      border-radius: 16px;
+      background: linear-gradient(145deg, #2b2b2b, #1e1e1e);
+      border: 1px solid #4a3b2a;
+      box-shadow: 
+        0 0 25px rgba(0, 0, 0, 0.7),
+        inset 0 0 15px rgba(70, 50, 30, 0.25);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 3rem;
+      color: #d0b07a;
+      text-shadow: 0 0 15px rgba(208, 176, 122, 0.3);
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+      margin-top: 0;
+    }
+
+    h2 {
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: #c2a76a;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      border-bottom: 1px solid #5a4a32;
+      padding-bottom: 15px;
+    }
+
+    h4 {
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: #8c7b60;
+      margin-bottom: 0.5rem;
+      margin-top: 0;
+    }
+
+    .input-section {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .field-group {
+      flex: 1;
+    }
+
+    label {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #cfa85d;
+      margin-bottom: 0.8rem;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 200px;
+      padding: 1.3rem;
+      background-color: #151515;
+      border: 1px solid #6e5b43;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-family: 'Courier New', monospace;
+      color: #f0ead6;
+      resize: vertical;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+      box-sizing: border-box;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #d0b07a;
+      background-color: #1a1a1a;
+      box-shadow: 0 0 8px rgba(208, 176, 122, 0.2);
+    }
+
+    textarea::placeholder {
+      color: #6e5b43;
+      font-style: italic;
+    }
+
+    .calculate-button {
+      width: 100%;
+      padding: 1.2rem;
+      background: linear-gradient(145deg, #5a4a32, #3a2f1f);
+      color: #f5f0e1;
+      border: 1px solid #7b6646;
+      border-radius: 8px;
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .calculate-button:hover {
+      background: linear-gradient(145deg, #7b6646, #5a4a32);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(195, 160, 90, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .calculate-button:active {
+      transform: translateY(0);
+    }
+
+    .result-section {
+      margin-top: 2.5rem;
+    }
+
+    .info-card {
+      background: rgba(20, 20, 20, 0.6);
+      border: 1px solid #4a3b2a;
+      border-radius: 12px;
+      padding: 1.8rem;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .info-card h3 {
+      color: #d0b07a;
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      margin-top: 0;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .result-content {
+      font-family: 'Courier New', monospace;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #e6e2d3;
+      background: #0f0f0f;
+      padding: 1.2rem;
+      border-radius: 6px;
+      border-left: 4px solid #d0b07a;
+      min-height: 70px;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 900px) {
+      .input-section {
+        flex-direction: column;
+      }
+      .container {
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Variables</h1>
+    <h2>Tecnológico de Software</h2>
+    <h4>Patricio Medina Batun, 1B</h4>
+    <h4>Fundamentso de Álgebra</h4>
+
+    <div class="input-section">
+      <div class="field-group">
+        <label for="variables">Variables:</label>
+        <textarea id="variables" placeholder="Ejemplo: w1 = 1, w2 = 2, w3 = 3"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label for="equations">Ecuaciones:</label>
+        <textarea id="equations" placeholder="Ejemplo: resultado = w1 * w2 + w3"></textarea>
+      </div>
+    </div>
+
+    <button id="calculate-btn" class="calculate-button">Calcular</button>
+
+    <div class="result-section">
+      <div class="info-card">
+        <h3>Resultado:</h3>
+        <div id="result" class="result-content">
+          Ingresa las variables y ecuaciones para ver el resultado
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+class Calculator {
+  constructor() {
+    this.variablesInput = document.getElementById('variables');
+    this.equationsInput = document.getElementById('equations');
+    this.calculateButton = document.getElementById('calculate-btn');
+    this.resultDiv = document.getElementById('result');
+    this.init();
+  }
+
+  init() {
+    this.calculateButton.addEventListener('click', () => this.calculate());
+    this.variablesInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.ctrlKey) this.calculate();
+    });
+    this.equationsInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.ctrlKey) this.calculate();
+    });
+  }
+
+  parseVariables(variablesText) {
+    const variables = {};
+    const lines = variablesText.split('\n').filter(line => line.trim());
+    for (const line of lines) {
+      const parts = line.split(',');
+      for (const part of parts) {
+        const match = part.trim().match(/^(\w+)\s*=\s*(.+)$/);
+        if (match) {
+          const [, varName, value] = match;
+          variables[varName] = this.evaluateExpression(value.trim(), variables);
+        }
+      }
+    }
+    return variables;
+  }
+
+  evaluateExpression(expression, variables) {
+    if (!/^[a-zA-Z0-9+\-*/().\s^]+$/.test(expression)) {
+      throw new Error(`Expresión no válida: ${expression}`);
+    }
+    let processed = expression.replace(/\^/g, '**');
+    for (const [varName, value] of Object.entries(variables)) {
+      const regex = new RegExp(`\\b${varName}\\b`, 'g');
+      processed = processed.replace(regex, value);
+    }
+    if (/[a-zA-Z]/.test(processed)) {
+      throw new Error(`Variables sin definir en: ${processed}`);
+    }
+    return Function(`"use strict"; return (${processed})`)();
+  }
+
+  calculate() {
+    try {
+      const variables = this.parseVariables(this.variablesInput.value.trim());
+      const equations = this.equationsInput.value.split('\n').filter(l => l.trim());
+      const results = [];
+      for (const eq of equations) {
+        const match = eq.match(/^(\w+)\s*=\s*(.+)$/);
+        if (match) {
+          const [, resVar, expr] = match;
+          const result = this.evaluateExpression(expr, variables);
+          variables[resVar] = result;
+          results.push(`${resVar} = ${result}`);
+        } else {
+          results.push(`${eq} = ${this.evaluateExpression(eq, variables)}`);
+        }
+      }
+      this.showResult(results.join('\n'));
+    } catch (err) {
+      this.showResult("Error: " + err.message, "error");
+    }
+  }
+
+  showResult(message, type = "success") {
+    this.resultDiv.textContent = message;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => new Calculator());
+</script>
+</body>
+</html>
