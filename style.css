@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:wght@400;600&display=swap');
+
+body {
+    font-family: 'EB Garamond', 'Garamond', serif;
+    background: radial-gradient(circle at top, #2c2c2c 0%, #1a1a1a 100%);
+    color: #e6e2d3;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.main-header {
+    text-align: center;
+    padding: 60px 0 40px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(to right, transparent, #5a4a32, transparent) 1;
+}
+
+.main-header h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 3em;
+    margin: 0;
+    color: #d0b07a;
+    text-shadow: 0 0 15px rgba(208, 176, 122, 0.3);
+    letter-spacing: 2px;
+}
+
+.main-header p {
+    font-family: 'Cinzel', serif;
+    color: #8c7b60;
+    font-size: 1.1em;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.grid-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 20px 0;
+}
+
+.card {
+    display: block;
+    background: linear-gradient(145deg, #2b2b2b, #202020);
+    border: 1px solid #4a3b2a;
+    border-radius: 12px;
+    padding: 30px 20px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.card h3 {
+    font-family: 'Cinzel', serif;
+    color: #cfa85d;
+    margin: 0 0 10px 0;
+    font-size: 1.4em;
+    border-bottom: 1px solid #4a3b2a;
+    padding-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+.card p {
+    color: #b0a895;
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #7b6646;
+    background: linear-gradient(145deg, #323232, #252525);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 15px rgba(208, 176, 122, 0.1);
+}
+
+.card:hover h3 {
+    color: #fff8e6;
+    border-bottom-color: #d0b07a;
+}
+
+.main-footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 40px 0;
+    border-top: 1px solid #3a2f1f;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+}
+
+.main-footer p {
+    color: #6e5b43;
+    font-size: 0.9em;
+    margin: 5px 0;
+    font-family: 'Cinzel', serif;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.main-header {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.grid-menu {
+    animation: fadeInUp 1s ease-out 0.3s backwards;
+}
