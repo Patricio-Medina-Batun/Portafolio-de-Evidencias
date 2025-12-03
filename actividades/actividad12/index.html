@@ -437,6 +437,27 @@ function parsearComplejo(str) {
     return new NumeroComplejo(real, imag);
 }
 
+// Nueva función para parsear el divisor lineal (ej: "x+1" -> raíz -1)
+function parsearDivisor(str) {
+    if (!str || str.trim() === "") throw new Error("El campo del divisor está vacío.");
+    str = str.trim().replace(/\s/g, '');
+    
+    // Debe ser de la forma x, x+c, x-c, donde c es un número real
+    const match = str.match(/^x([+-]?\d*\.?\d+)?$/);
+    if (!match) {
+        throw new Error("El divisor debe ser de la forma 'x', 'x+c' o 'x-c' (ej: x+1, x-2).");
+    }
+    
+    const cStr = match[1];
+    const c = cStr ? parseFloat(cStr) : 0; // Si no hay c, es x+0
+    if (isNaN(c)) {
+        throw new Error(`El coeficiente en el divisor '${str}' no es un número válido.`);
+    }
+    
+    // El divisor es x + c = x - (-c), así que la raíz es -c
+    return new NumeroComplejo(-c);
+}
+
 function calcularDivision() {
     const resultDiv = document.getElementById('resultado');
     resultDiv.style.display = 'none';
@@ -444,24 +465,24 @@ function calcularDivision() {
 
     try {
         const polinomioStr = document.getElementById('polinomio').value;
-        const raizStr = document.getElementById('raiz').value;
+        const divisorStr = document.getElementById('raiz').value; // Ahora es el divisor, no la raíz
 
-        if (!polinomioStr || !raizStr) {
+        if (!polinomioStr || !divisorStr) {
             throw new Error('Por favor ingresa todos los datos.');
         }
 
         const coeficientes = parsearPolinomio(polinomioStr);
-        const raiz = parsearComplejo(raizStr);
+        const raiz = parsearDivisor(divisorStr); // Extrae la raíz del divisor
 
         if (coeficientes.some(c => isNaN(c.real) || isNaN(c.imag))) {
             throw new Error("Error al interpretar los coeficientes del polinomio.");
         }
         if (isNaN(raiz.real) || isNaN(raiz.imag)) {
-            throw new Error("La raíz (divisor) no es válida.");
+            throw new Error("El divisor no es válido.");
         }
 
         const resultado = divisionSintetica(coeficientes, raiz);
-        mostrarResultado(resultado, coeficientes, raiz, polinomioStr);
+        mostrarResultado(resultado, coeficientes, raiz, polinomioStr, divisorStr);
 
     } catch (error) {
         console.error(error);
@@ -504,7 +525,7 @@ function divisionSintetica(coeficientes, raiz) {
     };
 }
 
-function mostrarResultado(resultado, coeficientes, raiz, polinomioOriginal) {
+function mostrarResultado(resultado, coeficientes, raiz, polinomioOriginal, divisorStr) {
     let html = '<div class="result-title">Polinomio Original</div>';
     html += '<div style="text-align: center; font-size: 1.2em; margin-bottom: 20px; padding: 15px; background: white; border: 1px solid #e0e0e0; border-radius: 4px; color: #111;">';
     html += '<strong>' + polinomioOriginal + '</strong>';
@@ -540,7 +561,7 @@ function mostrarResultado(resultado, coeficientes, raiz, polinomioOriginal) {
     html += '<div style="overflow-x: auto;">';
     html += '<table class="process-table">';
     
-    html += '<tr><td class="divisor-cell">Divisor: ' + raiz.toString() + '</td>';
+    html += '<tr><td class="divisor-cell">Divisor: ' + divisorStr + ' (Raíz: ' + raiz.toString() + ')</td>';
     coeficientes.forEach(c => {
         html += '<td>' + c.toString() + '</td>';
     });
